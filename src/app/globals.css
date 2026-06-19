@@ -1,26 +1,190 @@
 @import "tailwindcss";
 
+/* ===== NEUMORPHIC DESIGN TOKENS ===== */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Surface */
+  --bg: #E0E5EC;
+  --bg-rgb: 224, 229, 236;
+
+  /* Text */
+  --fg: #3D4852;
+  --fg-muted: #6B7280;
+  --fg-placeholder: #A0AEC0;
+
+  /* Accent */
+  --accent: #6C63FF;
+  --accent-light: #8B84FF;
+  --accent-secondary: #38B2AC;
+
+  /* Shadows (CRITICAL - RGB for smooth blending) */
+  --shadow-dark: rgb(163, 177, 198);
+  --shadow-light: 255, 255, 255;
+
+  /* Extruded (Standard) */
+  --neu-extruded: 9px 9px 16px rgb(163, 177, 198, 0.6),
+    -9px -9px 16px rgba(255, 255, 255, 0.5);
+
+  /* Extruded Hover (Lifted) */
+  --neu-extruded-hover: 12px 12px 20px rgb(163, 177, 198, 0.7),
+    -12px -12px 20px rgba(255, 255, 255, 0.6);
+
+  /* Extruded Small */
+  --neu-extruded-sm: 5px 5px 10px rgb(163, 177, 198, 0.6),
+    -5px -5px 10px rgba(255, 255, 255, 0.5);
+
+  /* Inset (Pressed) */
+  --neu-inset: inset 6px 6px 10px rgb(163, 177, 198, 0.6),
+    inset -6px -6px 10px rgba(255, 255, 255, 0.5);
+
+  /* Inset Deep */
+  --neu-inset-deep: inset 10px 10px 20px rgb(163, 177, 198, 0.7),
+    inset -10px -10px 20px rgba(255, 255, 255, 0.6);
+
+  /* Inset Small */
+  --neu-inset-sm: inset 3px 3px 6px rgb(163, 177, 198, 0.6),
+    inset -3px -3px 6px rgba(255, 255, 255, 0.5);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-bg: var(--bg);
+  --color-fg: var(--fg);
+  --color-fg-muted: var(--fg-muted);
+  --color-accent: var(--accent);
+  --color-accent-light: var(--accent-light);
+  --color-accent-secondary: var(--accent-secondary);
+  --color-shadow-dark: var(--shadow-dark);
+  --font-display: var(--font-plus-jakarta);
+  --font-body: var(--font-dm-sans);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* ===== GLOBAL RESETS ===== */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-body), system-ui, sans-serif;
+  min-height: 100vh;
+}
+
+::selection {
+  background-color: var(--accent);
+  color: white;
+}
+
+/* ===== NEUMORPHIC UTILITY CLASSES ===== */
+
+/* Extruded (raised from surface) */
+.neu-extruded {
+  box-shadow: var(--neu-extruded);
+}
+
+.neu-extruded-hover:hover {
+  box-shadow: var(--neu-extruded-hover);
+  transform: translateY(-1px);
+}
+
+/* Inset (pressed into surface) */
+.neu-inset {
+  box-shadow: var(--neu-inset);
+}
+
+.neu-inset-deep {
+  box-shadow: var(--neu-inset-deep);
+}
+
+.neu-inset-sm {
+  box-shadow: var(--neu-inset-sm);
+}
+
+/* Active press effect */
+.neu-press:active {
+  box-shadow: var(--neu-inset-sm);
+  transform: translateY(0.5px);
+}
+
+/* ===== ANIMATIONS ===== */
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes float-delayed {
+  0%,
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-12px) rotate(3deg);
+  }
+}
+
+@keyframes pulse-soft {
+  0%,
+  100% {
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.animate-float-delayed {
+  animation: float-delayed 4s ease-in-out infinite;
+  animation-delay: 1s;
+}
+
+.animate-pulse-soft {
+  animation: pulse-soft 3s ease-in-out infinite;
+}
+
+/* ===== FOCUS STYLES (Accessibility) ===== */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 8px;
+}
+
+/* Remove default outline for mouse users */
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* ===== SCROLLBAR ===== */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgb(163, 177, 198, 0.6);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(163, 177, 198, 0.8);
 }
