@@ -4,7 +4,7 @@ import Input from "@/components/ui/Input";
 
 export default function CTA() {
   return (
-    <section className="px-6 py-24 md:py-32">
+    <section className="px-6 py-28 md:py-36 lg:py-40">
       <div className="mx-auto max-w-4xl">
         <Card padding="xl" className="text-center">
           <p className="mb-4 text-sm font-semibold uppercase tracking-widest text-[var(--accent)] font-display">
@@ -20,15 +20,15 @@ export default function CTA() {
             that feels like real materials.
           </p>
 
-          <div className="mx-auto mt-10 flex max-w-md flex-col gap-3 sm:flex-row">
-            <div className="flex-1">
+          <div className="mx-auto mt-10 flex max-w-sm flex-col items-center gap-3 sm:max-w-md sm:flex-row">
+            <div className="w-full flex-1">
               <Input
                 type="email"
                 placeholder="you@company.com"
                 aria-label="Email address"
               />
             </div>
-            <Button variant="primary" size="md" className="shrink-0 sm:h-12">
+            <Button variant="primary" size="md" className="w-full shrink-0 sm:w-auto sm:h-12">
               Join Waitlist
             </Button>
           </div>
